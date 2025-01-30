@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 const JWT_SECRET = process.env.JWT_SECRET || "savi";
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/resort_booking";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/resort_booking";
 
 // ✅ Connect to MongoDB
 mongoose
