@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 const JWT_SECRET = process.env.JWT_SECRET || "savi";
-const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://savithaseenivasan82:Savi123@cluster0.vepay.mongodb.net/";
+const MONGO_URI = process.env.MONGO_URI || "mongodb+srv://savithaseenivasan82:Savi123@cluster0.vepay.mongodb.net/hotel-booking";
 
 // ✅ Connect to MongoDB
 mongoose
@@ -39,13 +39,13 @@ const bookingSchema = new mongoose.Schema({
 });
 const Booking = mongoose.model("Booking", bookingSchema);
 
-// ✅ Middleware to Protect Routes
+//✅ Middleware to Protect Routes
 const authenticateToken = (req, res, next) => {
   const token = req.header("Authorization");
   console.log("🔹 Received Token in Backend:", token);
 
   if (!token) {
-    console.log("❌ No Token Provided");
+    
     return res.status(401).json({ message: "Access Denied" });
   }
 
@@ -59,6 +59,32 @@ const authenticateToken = (req, res, next) => {
     res.status(400).json({ message: "Invalid Token" });
   }
 };
+
+
+// const authenticateToken = (req, res, next) => {
+//   console.log("🔹 Incoming Headers:", req.headers);  // Debugging
+
+//   const authHeader = req.headers["authorization"];  // Ensure correct header retrieval
+//   console.log("🔹 Received Authorization Header:", authHeader);
+
+//   if (!authHeader || !authHeader.startsWith("Bearer ")) {
+//     console.log("❌ No Valid Token Provided");
+//     return res.status(401).json({ message: "Access Denied" });
+//   }
+
+//   const token = authHeader.split(" ")[1]; // Extract token after "Bearer"
+//   console.log("✅ Extracted Token:", token);
+
+//   try {
+//     const verified = jwt.verify(token, JWT_SECRET);
+//     req.user = verified;
+//     console.log("✅ Token Verified. User ID:", req.user.id);
+//     next();
+//   } catch (error) {
+//     console.error("❌ Invalid Token:", error.message);
+//     res.status(400).json({ message: "Invalid Token" });
+//   }
+// };
 
 // ✅ User Registration
 app.post("/api/register", async (req, res) => {
